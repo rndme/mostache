@@ -10,11 +10,11 @@ I love mustache, but I felt it could be slightly easier to feed it JSON without 
 ### New Features
 
 #### {INDEX} mini-tag
-  Note the single-brace. Returns the current index when iterating an Array. 
+  Note the single-brace. Returns the current index when iterating an Array.  <br />
     `{{#persons}}<li> #{INDEX}. {{firstName}} {{lastName}} </li> {{/persons}}`
 
 #### {SEP} mini-section
-   Note the single-brace. Returns the enclosed block for every value except for the last. 
+   Note the single-brace. Returns the enclosed block for every value except for the last. <br />
     `{SEP} <br /> {/SEP}`
 
 #### native method detection
