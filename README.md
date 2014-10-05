@@ -7,6 +7,9 @@ Mostache has a modest goal: unobtrusively add a few key features to standard mus
 
 I love mustache, but I felt it could be slightly easier to feed it JSON without re-inventing the wheel or adding dozens of kilobytes of parsing code and while making sure that Mustache performance (currently great with version 0.7+) doesn't suffer from the modification. As a result, virtually any valid mustache template can be used with mostache, so upgrading is easy. 
 
+Try online examples at <http://danml.com/mostache/>
+
+
 ### New Features
 
 #### {INDEX} mini-tag
