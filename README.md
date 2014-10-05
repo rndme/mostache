@@ -11,11 +11,11 @@ I love mustache, but I felt it could be slightly easier to feed it JSON without 
 
 #### {INDEX} mini-tag
   Note the single-brace. Returns the current index when iterating an Array. 
-    {{#persons}}<li> #{INDEX}. {{firstName}} {{lastName}} </li> {{/persons}}
+`{{#persons}}<li> #{INDEX}. {{firstName}} {{lastName}} </li> {{/persons}}`
 
 #### {SEP} mini-section
    Note the single-brace. Returns the enclosed block for every value except for the last. 
-    {SEP} <br /> {/SEP}
+`{SEP} <br /> {/SEP}`
 
 #### native method detection
 Normally mustache passes any functions in the data to a special helper function, which doesn't work with native methods like `"".toUpperCase()`. Mostache detects natives methods in data and runs them against the data itself. it was always awkward to try to mash in methods to JSON data, but now at least the handy primitive native methods work without fuss. 
