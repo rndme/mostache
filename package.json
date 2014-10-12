@@ -2,10 +2,10 @@
 "name":		"mostache",
 "main": 	"mostache.min.js",
 "version":	"1.0.0",
-"description":	"mo' mustache. A slightly enhanced but backward-safe version of mustache.js that allows easier helper invocation, index injection, and delimiters",
+"description":	"mo' mustache. A slightly enhanced but backward-safe version of mustache.js to allows easier helper invocation, index injection, and delimiters",
 
 
-"keywords":		["mustache", "templating"],
+"keywords":		["mustache", "templating", "js"],
 "homepage":		"http://danml.com/mostache/",
 "license":		"CC-BY-4.0",
 "author":
@@ -24,8 +24,8 @@
 	"email": 	"rndme@users.noreply.github.com"
   },
 "files":	[
-	"mofun.js", 
-	"mofun.min.js"
+	"mostache.js", 
+	"mostache.min.js"
 ],
 
 "npmName": 	"mostache",
