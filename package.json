@@ -5,7 +5,7 @@
 "description":	"mo' mustache. A slightly enhanced but backward-safe version of mustache.js that allows easier helper invocation, index injection, and delimiters",
 
 
-"keywords":		["functional programming","pure functions","map/reduce"],
+"keywords":		["mustache", "templating"],
 "homepage":		"http://danml.com/mostache/",
 "license":		"CC-BY-4.0",
 "author":
