@@ -1,8 +1,9 @@
+// mostache, mo'mustache (mustache 8.1 fork )	
 /*!
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
  */
-/* modified by dandavis to become Mo'stache v0.8.2 
+/* modified by dandavis to become Mo'stache v0.8.2a
  
 	mustache improvements
 	
@@ -20,7 +21,7 @@
 		EX: {{numbers|JSON.stringify}}  //uses global path
 		EX: {{123 * 456 |eval}}   // uses expression and eval() for opt-in overloading/active processing
  */
- 
+  
 /*global define: false*/
 
 (function (global, factory) {
@@ -378,6 +379,8 @@
   Context.prototype.lookup = function (name) {
     var cache = this.cache;
 	
+//	console.log([name, cache]);
+	
     var value, rep, useSelf=[], last;
 	
 	if(name.indexOf("|")!==-1){
@@ -419,20 +422,42 @@
 
       cache[name] = value;
     }
-
 	
 	 if(rep){
 		rep.forEach(function(x, i){
-
+			
+			var args=x.split("(");
+				x=args.shift();
+			
+			if(args.length){			
+				args=args[0].trim().split(")")[0].trim().split(/\s*\,\s*/).map(function(a){
+					try{return JSON.parse(a);}catch(y){return a;}
+				});
+			}
 			var o=resolve( useSelf[i] ? (value===undefined?name:value) : mostache.global, x), v=value;
 			if(typeof o ==="function"){
 				if(value===undefined){ value=name; }
 				
+					
 				try{
 					if(useSelf[i]){ 
-						value=o.call(value);
-					}else{
-						value=o(value);
+						if(args.length){
+							value=o.apply(value, args);
+						}else{
+							value=o.call(value);
+						}
+					}else{  
+						if(args.length){
+							switch(args.length){
+								case 1: return value=o(value, args[0]);
+								case 2: return value=o(value, args[0], args[1]);
+								case 3: return value=o(value, args[0], args[1], args[2]);
+								default: return o.apply(this, [value].concat(args));
+							}
+							
+						}else{
+							value=o(value);
+						}
 					}
 				}catch(y){ } // shhh		
 				
@@ -592,7 +617,7 @@
   };
 
   mustache.name = "mustache.js";
-  mustache.version = "0.8.1";
+  mustache.version = "0.8.1mo";
   mustache.tags = [ "{{", "}}" ];
 
   // All high-level mustache.* functions use this writer.
