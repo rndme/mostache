@@ -20,6 +20,10 @@ Try online examples at <http://danml.com/mostache/>
    Note the single-brace. Returns the enclosed block for every value except for the last. <br />
     `{SEP} <br /> {/SEP}`
 
+#### {{!path}} else synax
+   `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling . <br />
+    `<p>{{#ok}}Y{{!ok}}N{{/ok}}</p>`
+    
 #### native method detection
 Normally mustache passes any functions in the data to a special helper function, which doesn't work with native methods like `"".toUpperCase()`. Mostache detects natives methods in data and runs them against the data itself. it was always awkward to try to mash in methods to JSON data, but now at least the handy primitive native methods work without fuss. 
 
