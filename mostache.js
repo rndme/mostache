@@ -394,6 +394,12 @@
     var value;
 	 // begin mostache patch to find methods in context chains
 	var rep, useSelf=[], last;
+		
+	if(name.indexOf("=")!==-1){ 
+		rep=name.trim().split(/\s*\=\s*/);
+	  	name=rep[0];
+	  	if(cache[name]!=rep[1]){  name="";  }							   
+	}
 	
 	if(name.indexOf("|")!==-1){
 		rep=name.trim().split(/\s*\|\s*/).map(function(a,b){
