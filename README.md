@@ -22,7 +22,7 @@ Try online examples at <http://danml.com/mostache/>
 
 #### {{!path}} else synax
   `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling . <br />
-    `<p>{{#ok}}Y{{!ok}}N{{/ok}}</p>`
+    `<p>{{#ok}}Y{{!ok}}N{{/ok}}</p>` == `<p>{{#ok}}Y{{/ok}}{{^ok}}N{{/ok}}</p>`
     
 #### {{#k=v}} conditionals
   `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothing with `{a:'a'}` . <br />
