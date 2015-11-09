@@ -398,7 +398,7 @@
 	if(name.indexOf("=")!==-1){ 
 		rep=name.trim().split(/\s*\=\s*/);
 	  	name=rep[0];
-	  	if(cache[name]!=rep[1]){  name="";  }							   
+	  	if( !(cache[name]==rep[1] || cache["."][name]==rep[1]) ){  name="";  }							   
 	}
 	
 	if(name.indexOf("|")!==-1){
