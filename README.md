@@ -21,8 +21,12 @@ Try online examples at <http://danml.com/mostache/>
     `{SEP} <br /> {/SEP}`
 
 #### {{!path}} else synax
-   `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling . <br />
+  `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling . <br />
     `<p>{{#ok}}Y{{!ok}}N{{/ok}}</p>`
+    
+#### Simple conditionals compare against primitives
+  `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothin with `{a:'a'}` . <br />
+  `{{#sec=main}}Home{{/sec=main}}` turns into `Home` with `{sec:"main"}` and nothing with `{sec:'about'}` . <br />
     
 #### native method detection
 Normally mustache passes any functions in the data to a special helper function, which doesn't work with native methods like `"".toUpperCase()`. Mostache detects natives methods in data and runs them against the data itself. it was always awkward to try to mash in methods to JSON data, but now at least the handy primitive native methods work without fuss. 
