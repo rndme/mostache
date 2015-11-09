@@ -686,7 +686,7 @@
                           'argument for mustache#render(template, view, partials)');
     }
 
-    return defaultWriter.render(template, view, partials);
+    return defaultWriter.render(template.replace(/\{\{!([\w\.]+?)\}\}/g, "{{/$1}}{{^$1}}"), view, partials);
   };
 
   // This is here for backwards compatibility with 0.4.x.,
