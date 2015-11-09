@@ -24,8 +24,8 @@ Try online examples at <http://danml.com/mostache/>
   `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling . <br />
     `<p>{{#ok}}Y{{!ok}}N{{/ok}}</p>`
     
-#### Simple conditionals compare against primitives
-  `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothin with `{a:'a'}` . <br />
+#### {{#k=v}} conditionals
+  `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothing with `{a:'a'}` . <br />
   `{{#sec=main}}Home{{/sec=main}}` turns into `Home` with `{sec:"main"}` and nothing with `{sec:'about'}` . <br />
     
 #### native method detection
