@@ -36,7 +36,10 @@ Try online examples at <http://danml.com/mostache/>
 `{{#a:k}}{{k}}={{.}} {{/a:k}}` turns into `b=1 c=5 ` with `{a:{b:1,c:5}}`
       
 
-
+#### {{__.key}} root synax
+  `{{__.key}}` reaches _key_ on the data object given to Mustache, bypassing local conflicts. <br />
+  `{{#b}}{{a}}|{{__.a}}{{/b}}` turns into `1|123` with `{a:123, b:[{a:1}]}`
+    
 
 #### native method detection
 Normally mustache passes any functions in the data to a special helper function, which doesn't work with native methods like `"".toUpperCase()`. Mostache detects natives methods in data and runs them against the data itself. it was always awkward to try to mash in methods to JSON data, but now at least the handy primitive native methods work without fuss. 
