@@ -432,6 +432,7 @@
           names = name.split('.');
           index = 0;
           
+          if(!context.parent && names[0]==="__") names.shift(); // support root lookup
 
           /**
            * Using the dot notion path in `name`, we descend through the
