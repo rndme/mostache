@@ -432,7 +432,6 @@
           names = name.split('.');
           index = 0;
           
-        if(names[0]==="__" && context.parent && context.parent.__) names.shift(); // support __.  root ref
 
           /**
            * Using the dot notion path in `name`, we descend through the
@@ -565,7 +564,6 @@
   Writer.prototype.render = function render (template, view, partials) {
     var tokens = this.parse(template);
     var context = (view instanceof Context) ? view : new Context(view);
-    context['__'] = view;
     return this.renderTokens(tokens, context, partials, template);
   };
 
