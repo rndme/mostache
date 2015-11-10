@@ -3,7 +3,7 @@ Mostache == Mo Mustache
 
 
 ### What and Why
-Mostache has a modest goal: unobtrusively add a few key features to standard mustache templates while changing the original mustache library code as little as possible (~8 meaningful splices).
+Mostache has a modest goal: unobtrusively add a few key features to standard mustache templates while changing the original mustache library code as little as possible.
 
 I love mustache, but I felt it could be slightly easier to feed it JSON without re-inventing the wheel or adding dozens of kilobytes of parsing code and while making sure that Mustache performance doesn't suffer from the modification. As a result, virtually any valid mustache template can be used with mostache, so upgrading is easy. 
 
