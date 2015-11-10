@@ -400,7 +400,13 @@
 	  	name=rep[0];
 	  	if( !(cache[name]==rep[1] || cache["."][name]==rep[1]) ){  name="";  }							   
 	}
-	
+		
+	if(name.indexOf(":")!==-1){ 
+		rep=name.trim().split(/\s*\:\s*/);
+	  	name=rep[0];
+	   cache['__NAME']=rep[1];
+	}
+
 	if(name.indexOf("|")!==-1){
 		rep=name.trim().split(/\s*\|\s*/).map(function(a,b){
 
@@ -609,7 +615,24 @@
         buffer += this.renderTokens(token[4], context.push(value[j]), partials, originalTemplate).replace(/\{INDEX\}/g, j+1).replace(sepRX, sep);
       }
     } else if (typeof value === 'object' || typeof value === 'string' || typeof value === 'number') {
-      buffer += this.renderTokens(token[4], context.push(value), partials, originalTemplate).replace(sepRX, sep);
+      	// handle object:key iterations:
+      	if(value != null && typeof value === 'object' && context.cache.__NAME) {
+		for(var k in value) {
+			var v = value[k], v2 = v;
+			if(typeof v === "object") {
+				v = {};
+				v[context.cache.__NAME] = k;
+				for(var it in v2) if(v2.hasOwnProperty(it)) v[it] = v2[it];
+			} else {
+				v = new v.constructor(v);
+				v[context.cache.__NAME] = k;
+			}
+			sep = (valueLength - 1) === j ? "" : "$1"; // separator value
+			buffer += this.renderTokens(token[4], context.push(v), partials, originalTemplate).replace(/\{INDEX\}/g, k).replace(sepRX, sep);
+		}// next k
+	} else { //numbers and strings and non-iterated objects:
+		buffer += this.renderTokens(token[4], context.push(value), partials, originalTemplate).replace(sepRX, sep);
+	}
     } else if (isFunction(value)) {
       if (typeof originalTemplate !== 'string')
         throw new Error('Cannot use higher-order sections without the original template');
