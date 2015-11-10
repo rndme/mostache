@@ -25,10 +25,19 @@ Try online examples at <http://danml.com/mostache/>
     `<p>{{#ok}}Y{{!ok}}N{{/ok}}</p>` == `<p>{{#ok}}Y{{/ok}}{{^ok}}N{{/ok}}</p>`
     
 #### {{#k=v}} conditionals
+  Compares are made against a _primitive_ value to the right of the `=`, no code/path/expressions evaluated.
   `{{#sec=main}}Home{{/sec=main}}` turns into `Home` with `{sec:"main"}` and nothing with `{sec:'about'}` . <br />
   `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothing with `{a:'a'}` . <br />
-  Compares are made against a _primitive_ value to the right of the `=`, no code/path/expressions evaluated.
+  
     
+#### {{#obj:key}} object iteration
+ Iterates over objects using a placeholder name on the section tag, prefixed by ":". <br />
+ Inside the section, the key as a tag will equal the name of the object property's key. <br />
+`{{#a:key}}{{key}}={{.}} {{/a:key}}` turns into `b=1 c=5 ` with `{a:{b:1,c:5}}`
+      
+
+
+
 #### native method detection
 Normally mustache passes any functions in the data to a special helper function, which doesn't work with native methods like `"".toUpperCase()`. Mostache detects natives methods in data and runs them against the data itself. it was always awkward to try to mash in methods to JSON data, but now at least the handy primitive native methods work without fuss. 
 
