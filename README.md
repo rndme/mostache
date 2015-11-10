@@ -33,7 +33,7 @@ Try online examples at <http://danml.com/mostache/>
 #### {{#obj:key}} object iteration
  Iterates over objects using a placeholder name on the section tag, prefixed by ":". <br />
  Inside the section, the key as a tag will equal the name of the object property's key. <br />
-`{{#a:key}}{{key}}={{.}} {{/a:key}}` turns into `b=1 c=5 ` with `{a:{b:1,c:5}}`
+`{{#a:k}}{{k}}={{.}} {{/a:k}}` turns into `b=1 c=5 ` with `{a:{b:1,c:5}}`
       
 
 
