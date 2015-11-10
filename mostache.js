@@ -398,13 +398,15 @@
 	if(name.indexOf("=")!==-1){ 
 		rep=name.trim().split(/\s*\=\s*/);
 	  	name=rep[0];
-	  	if( !(cache[name]==rep[1] || cache["."][name]==rep[1]) ){  name="";  }							   
+	  	if( !(cache[name]==rep[1] || cache["."][name]==rep[1]) ){  name="";  }
+	  	rep=null;
 	}
 		
 	if(name.indexOf(":")!==-1){ 
 		rep=name.trim().split(/\s*\:\s*/);
 	  	name=rep[0];
-	   cache['__NAME']=rep[1];
+		cache['__NAME']=rep[1];
+		rep=null;
 	}
 
 	if(name.indexOf("|")!==-1){
