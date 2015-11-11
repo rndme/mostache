@@ -2,26 +2,10 @@
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
  */
-/* modified by dandavis to become Mo'stache v2.1.3m
+// modified by dandavis to become Mo'stache v2.1.3m
 // mostache, mo'mustache (mustache 2.1.3 fork )	
- 
-	mustache improvements  
-	
-	inspired by dust:
-	The {SEP} some marker like <hr>, ", ", etc{/SEP}  mini-section prints the enclosed block for every value except for the last. 
-	The {INDEX} mini-tag passes the numerical index of the current element to the enclosed block. 
-	
-	
-	my idea, somewhat like angular but not custom code: 
-	{{phone.connectivity.radio | escape }}   - any function that outputs stringy things, including eval
-		EX: {{name|escape|btoa}}  // uses global functions
-		EX: {{|Math.random}} 	// uses global function
-		EX: {{name|.bold}} 	// uses self method (w/o arguments), indidcated by dot prefix
-		EX: {{name.bold}} 	// (native method mustache behaviour  over-ride)
-		EX: {{numbers|JSON.stringify}}  //uses global path
-		EX: {{123 * 456 |eval}}   // uses expression and eval() for opt-in overloading/active processing
- */
-  
+// see https://github.com/rndme/mostache/ for new features and usage
+
 /*global define: false Mustache: true*/
 
 (function defineMustache (global, factory) {
