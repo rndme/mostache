@@ -51,6 +51,8 @@ The biggest improvement: calling helpers from the template instead of the data. 
 
 Also note that if no value if found by the path/text to the left of the first "|", the path itself as a string (or nothing) will be used instead. That allows a particularly neat way of using JS mid-template: `{{location|eval}}`, or just injecting function returns: `{{|Date}}`. 
 
+[Live Demo of helpers, adapted from handlbars demo](http://pagedemos.com/4cy5k6jwxyrf/) <br />
+
 Finally, a special method indicator prefix (".") in front of the method name forces a method of the value to be executed, for example `"".toUpperCase()` as `{{name|.toUpperCase}}`.
 
 
