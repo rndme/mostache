@@ -21,11 +21,11 @@ Try online examples at <http://danml.com/mostache/>
     `{SEP} <br /> {/SEP}`
 
 #### {{!path}} else synax
-  `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling . <br />
+  `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling. <br />
     `<p>{{#ok}}Y{{!ok}}N{{/ok}}</p>` == `<p>{{#ok}}Y{{/ok}}{{^ok}}N{{/ok}}</p>`
     
 #### {{#k=v}} conditionals
-  Compares are made against a _primitive_ value to the right of the `=`, no code/path/expressions evaluated.
+  Compares are made against a _primitive_ value to the right of the `=`, no code/path/expressions evaluated. <br />
   `{{#sec=main}}Home{{/sec=main}}` turns into `Home` with `{sec:"main"}` and nothing with `{sec:'about'}` . <br />
   `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothing with `{a:'a'}` . <br />
   
@@ -46,7 +46,7 @@ Normally mustache passes any functions in the data to a special helper function,
 
 It's harder to explain than use. ex: `{{name.toUpperCase}}` now produces the data's name property's value in UPPERCASE, instead of the useless "[object Object]". Regular functions in your data still act as expected, it's only the existing hidden primitive methods in your data that run smarter. Mostly, these are for strings, but `{{number.toFixed}}` will produce an integer from a number, and `{{array.sort}}` will sort an array as alphabetical case-sensitive text.
 
-#### {|filters}
+#### {|helper}
 The biggest improvement: calling helpers from the template instead of the data. Placed after a normal mustache path, filters pass the value to a filter for processing, formatting, or selection. You can use many filters on the same value by separating each one with a pipe ("|"), and the result will be passed left to right through each of the filters. The function is reached by it's gloabl JS path, so any object or function can be used to process, without registering to mustache ahead of time. 
 
 Also note that if no value if found by the path/text to the left of the first "|", the path itself as a string (or nothing) will be used instead. That allows a particularly neat way of using JS mid-template: `{{location|eval}}`, or just injecting function returns: `{{|Date}}`. 
