@@ -42,17 +42,23 @@ Try online examples at <http://danml.com/mostache/>
   Activated by including `{{@@}}` inside a template, allows a leaner razor-style syntax <br />
   It replaces `{{` with `@` and `}}` with ` `, allowing leaner {{[#^/]section}} and {{name}} tags <br />
   It needs a non-letter to the left of the `@` so as to avoid emails, but regular mustache works as well. <br />
-
+  This syntax is enabled via one RegExp replace() on the template before compilation
 ```
-  	Mustache.to_html(
+Mustache.to_html(
   '{{@@}} <ul class="actors"> @#actors <li>@name  @/actors', 
   { actors: [ 
           { name: "Jeff Bridges" },
           { name: "John Goodman" },
           { name: "Steve Buscemi" }
       ]
-  });
+}); 
 ```
+Which renders html as:
+* Jeff Bridges
+* John Goodman
+* Steve Buscemi
+
+
 #### native method detection
 Normally mustache passes any functions in the data to a special helper function, which doesn't work with native methods like `"".toUpperCase()`. Mostache detects natives methods in data and runs them against the data itself. it was always awkward to try to mash in methods to JSON data, but now at least the handy primitive native methods work without fuss. 
 
