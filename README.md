@@ -38,6 +38,21 @@ Try online examples at <http://danml.com/mostache/>
   `{{__.key}}` reaches _key_ on the data object given to Mustache, bypassing local conflicts. <br />
   `{{#b}}{{a}}|{{__.a}}{{/b}}` turns into `1|123` with `{a:123, b:[{a:1}]}`
 
+#### Razor Syntax Option
+  Activated by including `{{@@}}` inside a template, allows a leaner razor-style syntax <br />
+  It replaces `{{` with `@` and `}}` with ` `, allowing leaner {{[#^/]section}} and {{name}} tags <br />
+  It needs a non-letter to the left of the `@` so as to avoid emails, but regular mustache works as well. <br />
+
+```
+  	Mustache.to_html(
+  '{{@@}} <ul class="actors"> @#actors <li>@name  @/actors', 
+  { actors: [ 
+          { name: "Jeff Bridges" },
+          { name: "John Goodman" },
+          { name: "Steve Buscemi" }
+      ]
+  });
+```
 #### native method detection
 Normally mustache passes any functions in the data to a special helper function, which doesn't work with native methods like `"".toUpperCase()`. Mostache detects natives methods in data and runs them against the data itself. it was always awkward to try to mash in methods to JSON data, but now at least the handy primitive native methods work without fuss. 
 
