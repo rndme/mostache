@@ -466,9 +466,9 @@
 					try{return JSON.parse(a);}catch(y){return a;}
 				});
 			}
-			var o=resolve( useSelf[i] ? (value===undefined?name:value) : mustacheFactory.global, x), v=value;
+			var u,o=resolve( useSelf[i] ? (value===u?name:value) : mustacheFactory.global, x), v=value;
 			if(typeof o ==="function"){
-				if(value===undefined){ value=name; }
+				if(value===u){ value=name; }
 				
 					
 				try{
@@ -566,9 +566,9 @@
   Writer.prototype.renderTokens = function renderTokens (tokens, context, partials, originalTemplate) {
     var buffer = '';
 
-    var token, symbol, value;
+    var token, symbol, value, u;
     for (var i = 0, numTokens = tokens.length; i < numTokens; ++i) {
-      value = undefined;
+      value = u;
       token = tokens[i];
       symbol = token[0];
 
@@ -579,7 +579,7 @@
       else if (symbol === 'name') value = this.escapedValue(token, context);
       else if (symbol === 'text') value = this.rawValue(token);
 
-      if (value !== undefined)
+      if (value !== u)
         buffer += value;
     }
 
