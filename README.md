@@ -45,7 +45,7 @@ Try online examples at <http://danml.com/mostache/>
   This syntax is enabled via one RegExp replace() on the template before compilation
 ```
 Mustache.to_html(
-  '{{@@}} <ul> @#actors <li>@name  @/actors', 
+  "{{@@}} <ul> @#actors <li>@name  @/actors", 
   { actors: [ 
           { name: "Jeff Bridges" },
           { name: "John Goodman" },
