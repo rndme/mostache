@@ -38,7 +38,7 @@ Try online examples at <http://danml.com/mostache/>
   `{{__.key}}` reaches _key_ on the data object given to Mustache, bypassing local conflicts. <br />
   `{{#b}}{{a}}|{{__.a}}{{/b}}` turns into `1|123` with `{a:123, b:[{a:1}]}`
 
-#### Razor Syntax Option
+#### razor syntax
   Activated by including `{{@@}}` inside a template, allows a leaner razor-style syntax <br />
   It replaces `{{` with `@` and `}}` with ` `, allowing leaner {{[#^/]section}} and {{name}} tags <br />
   It needs a non-letter to the left of the `@` so as to avoid emails, but regular mustache works as well. <br />
