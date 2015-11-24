@@ -45,7 +45,7 @@ Try online examples at <http://danml.com/mostache/>
   This syntax is enabled via one RegExp replace() on the template before compilation
 ```
 Mustache.to_html(
-  '{{@@}} <ul class="actors"> @#actors <li>@name  @/actors', 
+  '{{@@}} <ul> @#actors <li>@name  @/actors', 
   { actors: [ 
           { name: "Jeff Bridges" },
           { name: "John Goodman" },
@@ -53,6 +53,8 @@ Mustache.to_html(
       ]
 }); 
 ```
+Which is pre-converted internally to the template: <br />
+`<ul> {{#actors}} <li>{{name}}  {{/actors}}` <br />
 Which renders html as:
 * Jeff Bridges
 * John Goodman
