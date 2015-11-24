@@ -20,11 +20,13 @@
   factory.global=global;
 }(this, function mustacheFactory (mustache) {
 
-  var objectToString = Object.prototype.toString;
-  var isArray = Array.isArray || function isArrayPolyfill (object) {
+  var objectToString = Object.prototype.toString,
+  isArray = Array.isArray || function isArrayPolyfill (object) {
     return objectToString.call(object) === '[object Array]';
-  };
-
+  },
+  rxElse= /\{\{!([\w\.]+?)\}\}/g,
+  rxRazor=/(\W)@([#\^!\/]?[\w\.$]+)/g;
+  
   function isFunction (object) {
     return typeof object === 'function';
   }
@@ -696,14 +698,15 @@
    * Renders the `template` with the given `view` and `partials` using the
    * default writer.
    */
+	  
   mustache.render = function render (template, view, partials) {
     if (typeof template !== 'string') {
       throw new TypeError('Invalid template! Template should be a "string" ' +
                           'but "' + typeStr(template) + '" was given as the first ' +
                           'argument for mustache#render(template, view, partials)');
     }
-
-    return defaultWriter.render(template.replace(/\{\{!([\w\.]+?)\}\}/g, "{{/$1}}{{^$1}}"), view, partials);
+	if(template.indexOf("{{@@}}")!==-1) template = template.replace(rxRazor, "$1{{$2}}");
+    return defaultWriter.render(template.replace(rxElse, "{{/$1}}{{^$1}}"), view, partials);
   };
 
   // This is here for backwards compatibility with 0.4.x.,
