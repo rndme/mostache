@@ -25,7 +25,7 @@
     return objectToString.call(object) === '[object Array]';
   },
   rxElse= /\{\{!([\w\.]+?)\}\}/g,
-  rxRazor=/(\W)@([#\^!\/]?[\w\.$]+)/g;
+  rxRazor=/(\W)@([#\^!\/\|\)\(]?[\w\.$]+)/g;
   
   function isFunction (object) {
     return typeof object === 'function';
