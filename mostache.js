@@ -20,21 +20,21 @@
   factory.global=global;
 }(this, function mustacheFactory (mustache) {
   "use strict";
-  var objectToString = Object.prototype.toString,
-	  isArray = Array.isArray || function isArrayPolyfill (object) {
-    return objectToString.call(object) === '[object Array]';
-  },
-	nil, 
-  rxElse= /\{\{!([\w\.]+?)\}\}/g,
-  rxRazor=/(\W)@([#\^!\/\|\)\(]?[\w\.$]+)/g,
-	  rxEqual=/\s*\=\s*/, 
+  var 	objectToString = Object.prototype.toString,
+		isArray = Array.isArray || function isArrayPolyfill (object) {
+    	  return objectToString.call(object) === '[object Array]';
+  	},
+	nil, // much faster than undefined in v8
+	rxElse= /\{\{!([\w\.]+?)\}\}/g,
+	rxRazor=/(\W)@([#\^!\/\|\)\(]?[\w\.$]+)/g,
+	rxEqual=/\s*\=\s*/, 
 	rxColon=/\s*\:\s*/,
-	 rxComma=/\s*\,\s*/,
-	  rxPipe=/\s*\|\s*/,
-	  rxIndex=/\{INDEX\}/g,
-	  rxHTML=/[&<>"'\/]/g,
-	  rxRx=/[\-\[\]{}()*+?.,\\\^$|#\s]/g,
-  	sepRX=/\{SEP\}([\w\W]+?)\{\/SEP\}/g;
+	rxComma=/\s*\,\s*/,
+	rxPipe=/\s*\|\s*/,
+	rxIndex=/\{INDEX\}/g,
+	rxHTML=/[&<>"'\/]/g,
+	rxRx=/[\-\[\]{}()*+?.,\\\^$|#\s]/g,
+	sepRX=/\{SEP\}([\w\W]+?)\{\/SEP\}/g;
   
   function isFunction (object) {
     return typeof object === 'function';
