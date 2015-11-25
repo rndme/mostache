@@ -1,4 +1,4 @@
-/*!
+ /*!
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
  */
@@ -19,13 +19,22 @@
   }
   factory.global=global;
 }(this, function mustacheFactory (mustache) {
-
+  "use strict";
   var objectToString = Object.prototype.toString,
-  isArray = Array.isArray || function isArrayPolyfill (object) {
+	  isArray = Array.isArray || function isArrayPolyfill (object) {
     return objectToString.call(object) === '[object Array]';
   },
+	nil, 
   rxElse= /\{\{!([\w\.]+?)\}\}/g,
-  rxRazor=/(\W)@([#\^!\/\|\)\(]?[\w\.$]+)/g;
+  rxRazor=/(\W)@([#\^!\/\|\)\(]?[\w\.$]+)/g,
+	  rxEqual=/\s*\=\s*/, 
+	rxColon=/\s*\:\s*/,
+	 rxComma=/\s*\,\s*/,
+	  rxPipe=/\s*\|\s*/,
+	  rxIndex=/\{INDEX\}/g,
+	  rxHTML=/[&<>"'\/]/g,
+	  rxRx=/[\-\[\]{}()*+?.,\\\^$|#\s]/g,
+  	sepRX=/\{SEP\}([\w\W]+?)\{\/SEP\}/g;
   
   function isFunction (object) {
     return typeof object === 'function';
@@ -40,7 +49,7 @@
   }
 
   function escapeRegExp (string) {
-    return string.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
+    return string.replace(rxRx, '\\$&');
   }
 
   /**
@@ -48,21 +57,14 @@
    * including its prototype, has a given property
    */
   function hasProperty (obj, propName) {
-    return obj != null && typeof obj === 'object' && (propName in obj);
-  }
+    return obj != nil && typeof obj === 'object' && (propName in obj);
 
-  // Workaround for https://issues.apache.org/jira/browse/COUCHDB-577
-  // See https://github.com/janl/mustache.js/issues/189
-  var regExpTest = RegExp.prototype.test;
-  function testRegExp (re, string) {
-    return regExpTest.call(re, string);
   }
-
-  var nonSpaceRe = /\S/;
-  function isWhitespace (string) {
-    return !testRegExp(nonSpaceRe, string);
-  }
-
+  
+  //var nonSpaceRe = /\S/;
+  //function isWhitespace (string) {	return nonSpaceRe.test(string);  }
+ var isWhitespace=/\S/;
+  
   var entityMap = {
     '&': '&amp;',
     '<': '&lt;',
@@ -73,7 +75,7 @@
   };
 
   function escapeHtml (string) {
-    return String(string).replace(/[&<>"'\/]/g, function fromEntityMap (s) {
+    return String(string).replace(rxHTML, function fromEntityMap (s) {
       return entityMap[s];
     });
   }
@@ -148,7 +150,7 @@
     var scanner = new Scanner(template);
 
     var start, type, value, chr, token, openSection;
-    while (!scanner.eos()) {
+    while (scanner.tail){ //!scanner.eos()) {
       start = scanner.pos;
 
       // Match any text between tags.
@@ -158,7 +160,7 @@
         for (var i = 0, valueLength = value.length; i < valueLength; ++i) {
           chr = value.charAt(i);
 
-          if (isWhitespace(chr)) {
+          if (isWhitespace.test(chr)) {
             spaces.push(tokens.length);
           } else {
             nonSpace = true;
@@ -244,7 +246,7 @@
       token = tokens[i];
 
       if (token) {
-        if (token[0] === 'text' && lastToken && lastToken[0] === 'text') {
+        if (lastToken && token[0] === 'text' && lastToken[0] === 'text') {
           lastToken[1] += token[1];
           lastToken[3] = token[3];
         } else {
@@ -314,14 +316,17 @@
    * Returns the matched text if it can match, the empty string otherwise.
    */
   Scanner.prototype.scan = function scan (re) {
-    var match = this.tail.match(re);
+	var t=this.tail, match, string;
+//	if(!re.test(t)) return '';
+	
+    match = t.match(re);
 
     if (!match || match.index !== 0)
       return '';
 
-    var string = match[0];
+    string = match[0];
 
-    this.tail = this.tail.substring(string.length);
+    this.tail = t.substring(string.length);
     this.pos += string.length;
 
     return string;
@@ -377,26 +382,27 @@
   Context.prototype.lookup = function lookup (name) {
     var cache = this.cache;
 
-    var value;
+    var value, u, len,
 	 // begin mostache patch to find methods in context chains
-	var rep, useSelf=[], last;
+	rep, useSelf=[], last;
+	  
 		
 	if(name.indexOf("=")!==-1){ 
-		rep=name.trim().split(/\s*\=\s*/);
-	  	name=rep[0];
-	  	if( !(cache[name]==rep[1] || cache["."][name]==rep[1]) ){  name="";  }
-	  	rep=null;
+		rep=name.trim().split(rxEqual); 
+	 	name=rep[0];
+	 	if( !(cache[name]==rep[1] || cache["."][name]==rep[1]) ){  name="";  }
+	 	rep=u;
 	}
 		
 	if(name.indexOf(":")!==-1){ 
-		rep=name.trim().split(/\s*\:\s*/);
-	  	name=rep[0];
+		rep=name.trim().split(rxColon);
+	 	name=rep[0];
 		cache['__NAME']=rep[1];
-		rep=null;
+		rep=u;
 	}
 
 	if(name.indexOf("|")!==-1){
-		rep=name.trim().split(/\s*\|\s*/).map(function(a,b){
+		rep=name.trim().split(rxPipe).map(function(a,b){
 
 			if(a.slice(0,1)==="."){ 
 				useSelf[b-1] = true;
@@ -406,10 +412,12 @@
 		});		
 		name=rep.shift();
 	} // end mostache patch
+
 	
-    if (cache.hasOwnProperty(name)) {
-      value = cache[name];
-    } else {
+    //if (cache.hasOwnProperty(name)) {
+	if((value = cache[name])==u){
+      //value = cache[name];
+    //} else {
       var context = this, names, index, lookupHit = false;
 
       while (context) {
@@ -418,7 +426,7 @@
           names = name.split('.');
           index = 0;
           
-          if(!context.parent && names[0]==="__") names.shift(); // support root lookup
+          if(names[0]==="__" && !context.parent) names.shift(); // support root lookup
 
           /**
            * Using the dot notion path in `name`, we descend through the
@@ -431,8 +439,9 @@
            * This is specially necessary for when the value has been set to
            * `undefined` and we want to avoid looking up parent contexts.
            **/
-          while (value != null && index < names.length) {
-            if (index === names.length - 1)
+		  len=names.length;
+          while (value != u && index < len) {
+            if (index === len - 1)
               lookupHit = hasProperty(value, names[index]);
 
             value = value[names[index++]];
@@ -450,8 +459,10 @@
 
       cache[name] = value;
     }
+	
+	
 	 // begin mostache patch to handle passing in methods with arguments to expressions:
-	 if(rep){
+	 if(rep!==u){
 		rep.forEach(function(x, i){
 			function resolve(start, path) {
 				return path.split(/[\.,]/).reduce(function(obj, prop) {
@@ -462,7 +473,7 @@
 				x=args.shift();
 			
 			if(args.length){			
-				args=args[0].trim().split(")")[0].trim().split(/\s*\,\s*/).map(function(a){
+				args=args[0].trim().split(")")[0].trim().split(rxComma).map(function(a){
 					try{return JSON.parse(a);}catch(y){return a;}
 				});
 			}
@@ -496,6 +507,7 @@
 			}//end if found function?
 		}); // end forEach rep
 	 } // end if rep?
+	 
 	 //handle native functions different than user-land functions (minus bind()'d ones)
     if (isFunction(value)){
 		 if(String(value).indexOf("[native code]")!==-1 && last){
@@ -530,10 +542,10 @@
    * that is generated from the parse.
    */
   Writer.prototype.parse = function parse (template, tags) {
-    var cache = this.cache;
+    var u, cache = this.cache;
     var tokens = cache[template];
 
-    if (tokens == null)
+    if (tokens == u)
       tokens = cache[template] = parseTemplate(template, tags);
 
     return tokens;
@@ -571,13 +583,14 @@
       value = u;
       token = tokens[i];
       symbol = token[0];
-
-      if (symbol === '#') value = this.renderSection(token, context, partials, originalTemplate);
-      else if (symbol === '^') value = this.renderInverted(token, context, partials, originalTemplate);
-      else if (symbol === '>') value = this.renderPartial(token, context, partials, originalTemplate);
-      else if (symbol === '&') value = this.unescapedValue(token, context);
-      else if (symbol === 'name') value = this.escapedValue(token, context);
-      else if (symbol === 'text') value = this.rawValue(token);
+	switch(symbol){
+	  case '#': value = this.renderSection(token, context, partials, originalTemplate); break;
+	  case '^': value = this.renderInverted(token, context, partials, originalTemplate); break;
+	  case '>': value = this.renderPartial(token, context, partials, originalTemplate); break;
+	  case '&': value = this.unescapedValue(token, context); break;
+	  case 'name': value = this.escapedValue(token, context); break;
+	  case 'text': value = this.rawValue(token); break;
+	}
 
       if (value !== u)
         buffer += value;
@@ -588,8 +601,8 @@
 
   Writer.prototype.renderSection = function renderSection (token, context, partials, originalTemplate) {
     var self = this;
-    var buffer = '';
-    var value = context.lookup(token[1]), sep="$1", sepRX=/\{SEP\}([\w\W]+?)\{\/SEP\}/g;
+    var buffer = '', u;
+    var value = context.lookup(token[1]), sep="$1";
 
     // This function is used to render an arbitrary template
     // in the current context by higher-order sections.
@@ -602,11 +615,11 @@
     if (isArray(value)) {
       for (var j = 0, valueLength = value.length; j < valueLength; ++j) {
 		sep= (valueLength-1)===j ? "" : "$1";// separator value
-        buffer += this.renderTokens(token[4], context.push(value[j]), partials, originalTemplate).replace(/\{INDEX\}/g, j+1).replace(sepRX, sep);
+        buffer += this.renderTokens(token[4], context.push(value[j]), partials, originalTemplate).replace(rxIndex, j+1).replace(sepRX, sep);
       }
     } else if (typeof value === 'object' || typeof value === 'string' || typeof value === 'number') {
       	// handle object:key iterations:
-      	if(value != null && typeof value === 'object' && context.cache.__NAME) {
+      	if(value != u && typeof value === 'object' && context.cache.__NAME) {
 		for(var k in value) {
 			var v = value[k], v2 = v;
 			if(typeof v === "object") {
@@ -618,7 +631,7 @@
 				v[context.cache.__NAME] = k;
 			}
 			sep = (valueLength - 1) === j ? "" : "$1"; // separator value
-			buffer += this.renderTokens(token[4], context.push(v), partials, originalTemplate).replace(/\{INDEX\}/g, k).replace(sepRX, sep);
+			buffer += this.renderTokens(token[4], context.push(v), partials, originalTemplate).replace(rxIndex, k).replace(sepRX, sep);
 		}// next k
 	} else { //numbers and strings and non-iterated objects:
 		buffer += this.renderTokens(token[4], context.push(value), partials, originalTemplate).replace(sepRX, sep);
@@ -630,7 +643,7 @@
       // Extract the portion of the original template that the section contains.
       value = value.call(context.view, originalTemplate.slice(token[3], token[5]), subRender);
 
-      if (value != null)
+      if (value != u)
         buffer += value;
     } else {
       buffer += this.renderTokens(token[4], context, partials, originalTemplate);
@@ -650,20 +663,20 @@
   Writer.prototype.renderPartial = function renderPartial (token, context, partials) {
     if (!partials) return;
 
-    var value = isFunction(partials) ? partials(token[1]) : partials[token[1]];
-    if (value != null)
+    var u,value = isFunction(partials) ? partials(token[1]) : partials[token[1]];
+    if (value != u)
       return this.renderTokens(this.parse(value), context, partials, value);
   };
 
   Writer.prototype.unescapedValue = function unescapedValue (token, context) {
-    var value = context.lookup(token[1]);
-    if (value != null)
+    var u, value = context.lookup(token[1]);
+    if (value != u)
       return value;
   };
 
   Writer.prototype.escapedValue = function escapedValue (token, context) {
-    var value = context.lookup(token[1]);
-    if (value != null)
+    var u,value = context.lookup(token[1]);
+    if (value != u)
       return mustache.escape(value);
   };
 
@@ -733,3 +746,4 @@
   mustache.Writer = Writer;
 
 }));
+  
