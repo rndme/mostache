@@ -718,7 +718,7 @@
                           'but "' + typeStr(template) + '" was given as the first ' +
                           'argument for mustache#render(template, view, partials)');
     }
-	if(template.indexOf("{{@@}}")!==-1) template = template.replace(rxRazor, "$1{{$2}}");
+	if(template.indexOf("{{@@}}")!==-1) template = template.replace(rxRazor, "$1{{{$2}}}");
     return defaultWriter.render(template.replace(rxElse, "{{/$1}}{{^$1}}"), view, partials);
   };
 
