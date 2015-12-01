@@ -26,7 +26,7 @@
   	},
 	nil, // much faster than undefined in v8
 	rxElse= /\{\{!([\w\.]+?)\}\}/g,
-	rxRazor=/(\W)@([#\^!\/\|\.\)\(]?[\w\.$]+)/g,
+	rxRazor=/(\W)@([#\^!\/\|\.\)\(]?[\w\.$|]+)/g,
 	rxEqual=/\s*\=\s*/, 
 	rxColon=/\s*\:\s*/,
 	rxComma=/\s*\,\s*/,
