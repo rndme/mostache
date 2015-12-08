@@ -50,7 +50,8 @@ Try online examples at <http://danml.com/mostache/>
         case "mailto": return '<a href="mailto:{{'+args[0]+'}}">'+context[args[0]].toUpperCase()+'</a>' ;break;
       } 
     }
-is the partial yields `Mary (<a href="mailto:mary@example.com">MARY@EXAMPLE.COM</a>)`
+is the partial yields `Mary (<a href="mailto:mary@example.com">MARY@EXAMPLE.COM</a>)` <br />
+The original mustache would need `email` hard-coded into the partial above.
 
 
 #### razor syntax
