@@ -40,7 +40,7 @@ Try online examples at <http://danml.com/mostache/>
 
 
 #### parameters for partials
-  `{{> linkto email}}` passes an argument of `email` to a function partial. <br />
+  `{{> mailto email}}` passes an argument of `email` to a function partial. <br />
   This can be used to make more powerful/flexible custom helpers, and help to avoid hard-coding helper to data:  <br />
   `{{name}} ({{> mailto email}})` with `{name:"Mary", email: "mary@example.com"}` where <br />
   
