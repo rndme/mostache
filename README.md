@@ -37,6 +37,14 @@ Try online examples at <http://danml.com/mostache/>
   For performance reasons, long paths are not parsed, only one dot to the left of the equal, but wrapper blocks can drill.
 
 
+
+#### <@macro@> synax
+  Using `<@` and `@>` in a template invoked macro mode, where the template is run twice.<br  />
+  First, delimeters are switched to `<@` and `@>` and the templated is applied  with normal data. <br />
+  Then, the result is re-fed as to render normally. This can be used as a sub-query, marcos, even UI generation. <br />
+`Mustache.to_html("Selected: {{data.<@selected@>}}", {data:["A","B","C"], selected: 1})` yields `Selected: B`
+    
+
 #### {{#obj:key}} object iteration
  Iterates over objects using a placeholder name on the section tag, prefixed by ":". <br />
  Inside the section, the key as a tag will equal the name of the object property's key. <br />
