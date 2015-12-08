@@ -42,7 +42,7 @@ Try online examples at <http://danml.com/mostache/>
   First, delimeters are switched to `<@` and `@>` and the template is applied  with normal data. <br />
   Then, the result is re-fed as to re-render normally. This can be used for sub-queries, marcos, even UI generation. <br />
 `Mustache.to_html("Selected: {{data.<@selected@>}}", {data:["A","B","C"], selected: 1})` yields `Selected: B` <br />
-The internal intermediate template for the above looks like `Selected {{data.1}}`
+The internal intermediate template for the above looks like `Selected {{data.1}}` after the first pass.
 
 #### {{#obj:key}} object iteration
  Iterates over objects using a placeholder name on the section tag, prefixed by ":". <br />
