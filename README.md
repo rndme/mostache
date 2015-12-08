@@ -38,6 +38,20 @@ Try online examples at <http://danml.com/mostache/>
   `{{__.key}}` reaches _key_ on the data object given to Mustache, bypassing local conflicts. <br />
   `{{#b}}{{a}}|{{__.a}}{{/b}}` turns into `1|123` with `{a:123, b:[{a:1}]}`
 
+
+#### parameters for partials
+  `{{> linkto email}}` passes an argument of `email` to a function partial. <br />
+  This can be used to make more powerful/flexible custom helpers, and help to avoid hard-coding helper to data:  <br />
+  `{{name}} ({{> mailto email}})` with `{name:"Mary", email: "mary@example.com"}` where <br />
+  
+    function(method, args, context){
+      switch(method){
+        case "mailto": return '<a href="mailto:{{'+args[0]+'}}">'+context[args[0]].toUpperCase()+'</a>' ;break;
+      } 
+    }
+is the partial yields `Mary (<a href="mailto:mary@example.com">MARY@EXAMPLE.COM</a>)`
+
+
 #### razor syntax
   Activated by including `{{@@}}` inside a template, allows a leaner razor-style syntax <br />
   It replaces `{{` with `@` and `}}` with ` `, allowing leaner {{[#^/]section}} and {{name}} tags <br />
