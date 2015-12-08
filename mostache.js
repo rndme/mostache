@@ -386,13 +386,12 @@
 	 // begin mostache patch to find methods in context chains
 	rep, useSelf=[], last;
 	  
-		
 	if(name.indexOf("!=")!==-1){ 
 		rep=name.trim().split(rxEqual); 
 	 	name=rep[0].slice(0,-1);
 	 	if( !(cache[name]!=rep[1] || cache["."][name]!=rep[1]) ){  name="";  }
 	 	rep=u;
-	}	
+	}
 	
 	if(name.indexOf("=")!==-1){ 
 		rep=name.trim().split(rxEqual); 
@@ -400,7 +399,7 @@
 	 	if( !(cache[name]==rep[1] || cache["."][name]==rep[1]) ){  name="";  }
 	 	rep=u;
 	}
-		
+
 	if(name.indexOf(":")!==-1){ 
 		rep=name.trim().split(rxColon);
 	 	name=rep[0];
@@ -726,6 +725,14 @@
                           'argument for mustache#render(template, view, partials)');
     }
 	if(template.indexOf("{{@@}}")!==-1) template = template.replace(rxRazor, "$1{{$2}}");
+
+	var head="{{=<@ @>=}}";
+	if(template.indexOf("<@") !==-1 && template.indexOf("@>") !==-1 && template.slice(0,11)!=head){
+		console.log(template);
+		template = render(head+" "+template, view, partials||{});
+		console.info(template);
+	}
+
     return defaultWriter.render(template.replace(rxElse, "{{/$1}}{{^$1}}"), view, partials);
   };
 
