@@ -29,6 +29,13 @@ Try online examples at <http://danml.com/mostache/>
   `{{#sec=main}}Home{{/sec=main}}` turns into `Home` with `{sec:"main"}` and nothing with `{sec:'about'}` . <br />
   `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothing with `{a:'a'}` . <br />
   For performance reasons, long paths are not parsed, only one dot to the left of the equal, but wrapper blocks can drill.
+  
+#### {{#k!=v}} NOT conditionals
+  Compares are made against a _primitive_ value to the right of the `=`, no code/path/expressions evaluated. <br />
+  `{{#sec=!main}}Home{{/sec=!main}}` turns into `Home` with `{sec:"about"}` and nothing with `{sec:"main"}` . <br />
+  `{{#a.length!=3}}{{.}}{{/a.length!=3}}` turns into `abc` with `{a:"a"}` and nothing with `{a:'abc'}` . <br />
+  For performance reasons, long paths are not parsed, only one dot to the left of the equal, but wrapper blocks can drill.
+
 
 #### {{#obj:key}} object iteration
  Iterates over objects using a placeholder name on the section tag, prefixed by ":". <br />
