@@ -28,7 +28,7 @@ Try online examples at <http://danml.com/mostache/>
   Compares are made against a _primitive_ value to the right of the `=`, no code/path/expressions evaluated. <br />
   `{{#sec=main}}Home{{/sec=main}}` turns into `Home` with `{sec:"main"}` and nothing with `{sec:'about'}` . <br />
   `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothing with `{a:'a'}` . <br />
-  note that for performance reasons, long paths are not allowed, only one dot to the left of the equal, but wrapper blocks can drill.
+  For performance reasons, long paths are not parsed, only one dot to the left of the equal, but wrapper blocks can drill.
 
 #### {{#obj:key}} object iteration
  Iterates over objects using a placeholder name on the section tag, prefixed by ":". <br />
