@@ -662,12 +662,12 @@
 
   Writer.prototype.renderPartial = function renderPartial (token, context, partials) {
     if (!partials) return;
-
-    var u,value = isFunction(partials) ? partials(token[1]) : partials[token[1]];
-    if (value != u)
-      return this.renderTokens(this.parse(value), context, partials, value);
+    var u, key=String(token[1]).trim().split(/\s+/), 
+	value = partials[token[1]];
+	if(isFunction(partials)) value = partials(key[0], key.slice(1), context.view );
+	if (value != u) return this.renderTokens(this.parse(value), context, partials, value);
   };
-
+  
   Writer.prototype.unescapedValue = function unescapedValue (token, context) {
     var u, value = context.lookup(token[1]);
     if (value != u)
