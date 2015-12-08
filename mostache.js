@@ -387,6 +387,13 @@
 	rep, useSelf=[], last;
 	  
 		
+	if(name.indexOf("!=")!==-1){ 
+		rep=name.trim().split(rxEqual); 
+	 	name=rep[0].slice(0,-1);
+	 	if( !(cache[name]!=rep[1] || cache["."][name]!=rep[1]) ){  name="";  }
+	 	rep=u;
+	}	
+	
 	if(name.indexOf("=")!==-1){ 
 		rep=name.trim().split(rxEqual); 
 	 	name=rep[0];
