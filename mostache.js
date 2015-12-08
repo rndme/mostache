@@ -671,6 +671,7 @@
     var u, key=String(token[1]).trim().split(/\s+/), 
 	value = partials[token[1]];
 	if(isFunction(partials)) value = partials(key[0], key.slice(1), context.view );
+	if(isFunction(partials[key[0]])) value = partials[key[0]](key.slice(1), context.view );
 	if (value != u) return this.renderTokens(this.parse(value), context, partials, value);
   };
   
@@ -728,9 +729,7 @@
 
 	var head="{{=<@ @>=}}";
 	if(template.indexOf("<@") !==-1 && template.indexOf("@>") !==-1 && template.slice(0,11)!=head){
-		console.log(template);
 		template = render(head+" "+template, view, partials||{});
-		console.info(template);
 	}
 
     return defaultWriter.render(template.replace(rxElse, "{{/$1}}{{^$1}}"), view, partials);
