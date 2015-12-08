@@ -66,7 +66,7 @@ The internal intermediate template for the above looks like `Selected {{data.1}}
     }
 is the partial yields `Mary (<a href="mailto:mary@example.com">MARY@EXAMPLE.COM</a>)` <br />
 The original mustache would need `email` hard-coded into the partial above. <br />
-Unlike the original, you can also use an object of mixed strings and method properties.
+You can also use a partial object of mixed string and method properties, methods called as `(args, context)`
 
 
 #### razor syntax
