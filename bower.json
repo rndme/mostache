@@ -1,0 +1,19 @@
+{
+  "name": "mostache",
+  "main": "mostache.js",
+  "homepage": "https://github.com/rndme/mostache/",
+  "description": "Mostache == Mo Mustache",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
