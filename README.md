@@ -46,7 +46,7 @@ Try online examples at <http://danml.com/mostache/>
   `{{name}} ({{> mailto email}})` with `{name:"Mary", email: "mary@example.com"}` where <br />
   
     function(method, args, context){
-      switch(method){
+      switch(method){ // values can be         interpolated    -or-          gotten
         case "mailto": return '<a href="mailto:{{'+args[0]+'}}">'+context[args[0]].toUpperCase()+'</a>' ;break;
       } 
     }
