@@ -2,7 +2,7 @@
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
  */
-// modified by dandavis to become Mo'stache v2.1.3m
+// modified by dandavis to become Mo'stache
 // mostache, mo'mustache (mustache 2.1.3 fork )	
 // see https://github.com/rndme/mostache/ for new features and usage
 
@@ -382,14 +382,16 @@
   Context.prototype.lookup = function lookup (name) {
     var cache = this.cache;
 
-    var value, u, len,
+    var value, u, len, comp, 
 	 // begin mostache patch to find methods in context chains
 	rep, useSelf=[], last;
 	  
 	if(name.indexOf("!=")!==-1){ 
 		rep=name.trim().split(rxEqual); 
 	 	name=rep[0].slice(0,-1);
-	 	if( !(cache[name]!=rep[1] || cache["."][name]!=rep[1]) ){  name="";  }
+		comp=cache[name];
+		if(comp==u) comp = cache["."][name];
+		if(rep[1]==comp) name = "";
 	 	rep=u;
 	}
 	
