@@ -49,7 +49,7 @@ The internal intermediate template for the above looks like `Selected {{data.1}}
  Inside the section, the key as a tag will equal the name of the object property's key. <br />
 `{{#a:k}}{{k}}={{.}} {{/a:k}}` turns into `b=1 c=5 ` with `{a:{b:1,c:5}}`
 
-#### {{__.key}} root synax
+#### {{__.key}} root syntax
   `{{__.key}}` reaches _key_ on the data object given to Mustache, bypassing local conflicts. <br />
   `{{#b}}{{a}}|{{__.a}}{{/b}}` turns into `1|123` with `{a:123, b:[{a:1}]}`
 
