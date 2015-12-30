@@ -20,7 +20,7 @@ Try online examples at <http://danml.com/mostache/>
    Note the single-brace. Returns the enclosed block for every value except for the last. <br />
     `{SEP} <br /> {/SEP}`
 
-#### {{!path}} else synax
+#### {{!path}} else syntax
   `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling. <br />
     `<p>{{#ok}}Y{{!ok}}N{{/ok}}</p>` == `<p>{{#ok}}Y{{/ok}}{{^ok}}N{{/ok}}</p>`
     
@@ -37,7 +37,7 @@ Try online examples at <http://danml.com/mostache/>
   For performance reasons, long paths are not parsed, only one dot to the left of the equal, but wrapper blocks can drill.
 
 
-#### <@macro@> synax
+#### <@macro@> syntax
   Using `<@` and `@>` in a template invokes macro mode, where the template is run twice.<br  />
   First, delimeters are switched to `<@` and `@>` and the template is applied  with normal data. <br />
   Then, the result is re-fed as to re-render normally. This can be used for sub-queries, marcos, even UI generation. <br />
