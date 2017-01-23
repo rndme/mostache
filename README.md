@@ -12,19 +12,18 @@ Try online examples at <http://danml.com/mostache/>
 
 ### New Features
 
-* [{INDEX} mini-tag](.#user-content-index-mini-tag)
-* [{SEP} mini-section](.#user-content-sep-mini-section)
-* [{{!path}} else syntax](.#user-content-path-else-syntax)
-* [{{#k=v}} conditionals](.#user-content-kv-conditionals)
-* [{{#k!=v}} NOT conditionals](.#user-content-kv-not-conditionals)
-* [<@macro@> syntax](.#user-content-macro-syntax)
-* [{{#obj:key}} object iteration](.#user-content-objkey-object-iteration)
-* [{{__.key}} root syntax](.#user-content-__key-root-syntax)
-* [parameters for partials](.#user-content-parameters-for-partials)
-* [razor syntax](.#user-content-razor-syntax)
-* [native method detection](.#user-content-native-method-detection)
-* [{|helpers}](.#user-content-helpers)
-
+* [{INDEX} mini-tag](#user-content-index-mini-tag)
+* [{SEP} mini-section](#user-content-sep-mini-section)
+* [{{!path}} else syntax](#user-content-path-else-syntax)
+* [{{#k=v}} conditionals](#user-content-kv-conditionals)
+* [{{#k!=v}} NOT conditionals](#user-content-kv-not-conditionals)
+* [<@macro@> syntax](#user-content-macro-syntax)
+* [{{#obj:key}} object iteration](#user-content-objkey-object-iteration)
+* [{{__.key}} root syntax](#user-content-__key-root-syntax)
+* [parameters for partials](#user-content-parameters-for-partials)
+* [razor syntax](#user-content-razor-syntax)
+* [native method detection](#user-content-native-method-detection)
+* [{|helpers}](#user-content-helpers)
 
 
 
