@@ -12,13 +12,34 @@ Try online examples at <http://danml.com/mostache/>
 
 ### New Features
 
+* [{INDEX} mini-tag](.#user-content-index-mini-tag)
+* [{SEP} mini-section](.#user-content-sep-mini-section)
+* [{{!path}} else syntax](.#user-content-path-else-syntax)
+* [{{#k=v}} conditionals](.#user-content-kv-conditionals)
+* [{{#k!=v}} NOT conditionals](.#user-content-kv-not-conditionals)
+* [<@macro@> syntax](.#user-content-macro-syntax)
+* [{{#obj:key}} object iteration](.#user-content-objkey-object-iteration)
+* [{{__.key}} root syntax](.#user-content-__key-root-syntax)
+* [parameters for partials](.#user-content-parameters-for-partials)
+* [razor syntax](.#user-content-razor-syntax)
+* [native method detection](.#user-content-native-method-detection)
+* [{|helpers}](.#user-content-helpers)
+
+
+
+
 #### {INDEX} mini-tag
   Note the single-brace. Returns the current index when iterating an Array.  <br />
     `{{#persons}}<li> #{INDEX}. {{firstName}} {{lastName}} </li> {{/persons}}`
 
 #### {SEP} mini-section
    Note the single-brace. Returns the enclosed block for every value except for the last. <br />
-    `{SEP} <br /> {/SEP}`
+   
+```
+"Lucky Numbers: {{#nums}}{{.}}{SEP}, {/SEP}{{/nums}}." + 
+{nums:[7,9,21,33]} =
+"Lucky Numbers: 7, 9, 21, 33."
+````
 
 #### {{!path}} else syntax
   `{{!path}}` turns into `{{/path}}{{^path}}`, for simpler _else_ handling. <br />
@@ -28,13 +49,13 @@ Try online examples at <http://danml.com/mostache/>
   Compares are made against a _primitive_ value to the right of the `=`, no code/path/expressions evaluated. <br />
   `{{#sec=main}}Home{{/sec=main}}` turns into `Home` with `{sec:"main"}` and nothing with `{sec:'about'}` . <br />
   `{{#a.length=3}}{{.}}{{/a.length=3}}` turns into `abc` with `{a:"abc"}` and nothing with `{a:'a'}` . <br />
-  For performance reasons, long paths are not parsed, only one dot to the left of the equal, but wrapper blocks can drill.
+  For performance reasons, long paths are not parsed, only one dot to the left of the equal. Wrapper mustache blocks around the conditional can drill into the scope needed for the expression.
   
 #### {{#k!=v}} NOT conditionals
   Compares are made against a _primitive_ value to the right of the `=`, no code/path/expressions evaluated. <br />
   `{{#sec=!main}}Home{{/sec=!main}}` turns into `Home` with `{sec:"about"}` and nothing with `{sec:"main"}` . <br />
   `{{#a.length!=3}}{{.}}{{/a.length!=3}}` turns into `abc` with `{a:"a"}` and nothing with `{a:'abc'}` . <br />
-  For performance reasons, long paths are not parsed, only one dot to the left of the equal, but wrapper blocks can drill.
+  For performance reasons, long paths are not parsed, only one dot to the left of the equal. Wrapper mustache blocks around the conditional can drill into the scope needed for the expression.
 
 
 #### <@macro@> syntax
